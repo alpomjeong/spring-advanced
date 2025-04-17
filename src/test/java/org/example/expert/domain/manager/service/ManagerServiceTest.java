@@ -44,9 +44,10 @@ class ManagerServiceTest {
         long todoId = 1L;
         given(todoRepository.findById(todoId)).willReturn(Optional.empty());
 
+        //LV.3-2-1 NPE로 수정
         // when & then
-        InvalidRequestException exception = assertThrows(InvalidRequestException.class, () -> managerService.getManagers(todoId));
-        assertEquals("Manager not found", exception.getMessage());
+        NullPointerException exception = assertThrows(NullPointerException.class, () -> managerService.getManagers(todoId));
+        assertEquals("Todo not found", exception.getMessage());
     }
 
     @Test
