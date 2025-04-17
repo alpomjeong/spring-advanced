@@ -38,15 +38,15 @@ class ManagerServiceTest {
     @InjectMocks
     private ManagerService managerService;
 
+    //Lv.3-2-1 문제를 착각해서 테스트 코드 부부만 수정하여 작동하도록 다시 해결
     @Test
-    public void manager_목록_조회_시_Todo가_없다면_NPE_에러를_던진다() {
+    public void manager_목록_조회_시_Todo가_없다면_InvalidRequestException_에러를_던진다() {
         // given
         long todoId = 1L;
         given(todoRepository.findById(todoId)).willReturn(Optional.empty());
 
-        //LV.3-2-1 NPE로 수정1
         // when & then
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> managerService.getManagers(todoId));
+        InvalidRequestException exception = assertThrows(InvalidRequestException.class, () -> managerService.getManagers(todoId));
         assertEquals("Todo not found", exception.getMessage());
     }
 
