@@ -34,8 +34,8 @@ public class ManagerService {
         User user = User.fromAuthUser(authUser);
         Todo todo = todoRepository.findById(todoId)
                 .orElseThrow(() -> new InvalidRequestException("Todo not found"));
-
-        if (!ObjectUtils.nullSafeEquals(user.getId(), todo.getUser().getId())) {
+        //3-2-3 널체크를 하지않아서 즉시 npe가 발생하는 바람에 InvalidRequestException가 발생하지 못해서 널체크를 추가
+        if (todo.getUser() == null||!ObjectUtils.nullSafeEquals(user.getId(), todo.getUser().getId())) {
             throw new InvalidRequestException("담당자를 등록하려고 하는 유저가 일정을 만든 유저가 유효하지 않습니다.");
         }
 
